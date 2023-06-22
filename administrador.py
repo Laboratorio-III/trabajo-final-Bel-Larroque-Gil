@@ -2,7 +2,7 @@ from tareas import Tarea
 from connectionbdd import agregarFila, crearBaseDeDatos, crearTabla, traerTareaDeBDD, traerTareasDeBDD, modificarValor
 import sqlite3 as sql
 from fastapi import FastAPI
-from fastapi import HTTPException, status
+from fastapi import  status
 from datetime import datetime
 from pydantic import BaseModel
 from tkinter import messagebox
@@ -64,9 +64,6 @@ class administradorDeTarea:
 
 
     def eliminar_tarea(self, tarea_id: int):
-        if tarea_id is None:
-            raise ValueError("El ID de la tarea no puede ser nulo")
-
         conn = sql.connect('tareas.db')
         cursor = conn.cursor()
 
@@ -79,7 +76,4 @@ class administradorDeTarea:
             conn.commit()
             conn.close()
             return tarea_eliminada_id
-        else:
-            conn.close()
-            raise HTTPException(status_code=404, detail="No se encontró la tarea")
         
